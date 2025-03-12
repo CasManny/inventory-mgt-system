@@ -20,7 +20,7 @@ export const MobileNavigation = () => {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
+      <SheetTrigger asChild className="lg:hidden">
         <Button variant="outline">
           <Menu strokeWidth={2} className="fill-brand-primary" />
         </Button>

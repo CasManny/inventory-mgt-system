@@ -20,6 +20,7 @@ export const PricingTiers = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-10 md:py-20">
           {tiers.map((tier, index) => (
             <div
+              key={index}
               className={cn(
                 tier.popular && "border-2 md:scale-110 border-blue-600",
                 "relative bg-brand-gray/10 p-10 rounded "
@@ -38,7 +39,7 @@ export const PricingTiers = () => {
               <p className="text-sm">{tier.desc}</p>
               <div className="my-5 space-y-3">
                 {tier.features.map((item, index) => (
-                  <div className="flex gap-2">
+                  <div className="flex gap-2" key={index}>
                     <Check stroke="#98CE00" />
                     <p className="text-sm">{item}</p>
                   </div>

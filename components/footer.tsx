@@ -16,11 +16,11 @@ export const Footer = () => {
           <div className="flex-1 lg:px-10">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {inventoryLinks.map((item, index) => (
-                <div className="">
+                <div className="" key={index}>
                   <h3 className="font-bold mb-2 md:mb-5">{item.Name}</h3>
                   <div className="flex flex-col space-y-1 md:space-y-2.5">
                     {item.links.map((link, index) => (
-                      <Link href={link.href} className="text-sm">
+                      <Link href={link.href} key={index} className="text-sm">
                         {link.label}
                       </Link>
                     ))}

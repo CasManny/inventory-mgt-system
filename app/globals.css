@@ -43,6 +43,13 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-dark: var(--brand-primary-dark);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-light: var(--brand-light);
+  --color-brand-gray: var(--brand-gray);
+
 }
 
 :root {
@@ -79,6 +86,12 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+  --brand-primary: #3b82f6;
+  --brand-primary-dark: #2563eb;
+  --brand-secondary:  #10b981;
+  --brand-dark: #1e293b;
+  --brand-light:  #f8fafc;
+  --brand-gray: #94a3b8;
 }
 
 .dark {
@@ -124,3 +137,7 @@
     @apply bg-background text-foreground;
   }
 }
+* {
+  scroll-behavior: smooth;
+}
+

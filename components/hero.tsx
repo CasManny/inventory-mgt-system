@@ -21,7 +21,8 @@ export const HeroSection = () => {
             </Button>
           </div>
         </div>
-        <div className="size-full bg-black/10 mt-5 p-10 rounded-2xl relative">
+        <div className="size-fullmt-5 p-10  relative">
+          <div className="bg-black/10 inset-0 absolute rounded-2xl" />
           <div className="w-full max-w-3xl mx-auto h-[60vh] relative">
             <Image src={"/dashboard.png"} fill alt="dashboard" />
           </div>

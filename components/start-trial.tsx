@@ -10,7 +10,7 @@ export const StartTrial = () => {
           title="Ready to Streamline Your Inventory?"
           className="text-white text-center"
         />
-        <p className="text-lg font-medium text-center max-w-[700px]">
+        <p className="sm:text-lg text-sm font-medium text-center max-w-[700px]">
           Join thousands of businesses that trust InventoryPro to optimize their
           stock levels, reduce costs, and boost sales.
         </p>

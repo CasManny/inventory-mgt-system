@@ -44,7 +44,7 @@ const ourFeature = [
 
 export const Features = () => {
   return (
-    <section id="features" className="py-24 max-w-7xl mx-auto px-20">
+    <section id="features" className="py-24 max-w-7xl mx-auto px-10 md:px-20">
       <div className="">
         <div className="">
           <Heading title="Powerful Features" className="text-center mb-10" />
@@ -53,7 +53,7 @@ export const Features = () => {
             business.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-16">
           {ourFeature.map((item, index) => (
             <Card className="p-5" key={index}>
               <div className="">

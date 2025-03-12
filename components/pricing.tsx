@@ -6,18 +6,18 @@ import { Check } from "lucide-react";
 
 export const PricingTiers = () => {
   return (
-    <section className="bg-white px-20" id="pricing">
+    <section className="bg-white px-10 md:px-20" id="pricing">
       <div className="max-w-7xl mx-auto">
-        <div className="py-20">
+        <div className="py-5 md:py-20">
           <Heading
             title="Simple, Transparent Pricing"
-            className="text-center mb-10"
+            className="text-center mb-10 text-pretty"
           />
           <p className="text-center">
             Choose the plan that fits your business needs.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 py-10 md:py-20">
           {tiers.map((tier, index) => (
             <div
               className={cn(

@@ -2,26 +2,27 @@ import { navLinks } from "@/data/constants";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
+import { MobileNavigation } from "./mobile-navigation";
 
 export const Navbar = () => {
   return (
-    <nav className="max-w-7xl mx-auto px-20 py-5">
+    <nav className="max-w-7xl mx-auto px-10 md:px-20 py-5">
       <div className="flex justify-between items-center">
         <h1 className="text-brand-primary text-2xl font-bold">INventory</h1>
-        <div className="flex-1">
+        <div className="flex-1 hidden lg:flex">
           <div className="flex gap-10 text-dark items-center justify-center w-full">
             {navLinks.map((item, index) => (
               <Link
                 key={index}
                 href={item.href}
-                className="text-[15px]  font-medium"
+                className="text-[15px] capitalize font-medium"
               >
                 {item.label}
               </Link>
             ))}
           </div>
         </div>
-        <div className="space-x-2">
+        <div className="space-x-2 hidden lg:flex">
           <Link
             href={"/sign-in"}
             className={cn(
@@ -41,6 +42,7 @@ export const Navbar = () => {
             Sign up
           </Link>
         </div>
+        <MobileNavigation />
       </div>
     </nav>
   );

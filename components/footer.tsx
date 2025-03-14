@@ -1,6 +1,7 @@
 import { inventoryLinks } from "@/data/constants";
 import Link from "next/link";
 import React from "react";
+import { InventoryLogo } from "./logo";
 
 export const Footer = () => {
   return (
@@ -8,7 +9,7 @@ export const Footer = () => {
       <div className="max-w-6xl mx-auto px-8">
         <div className="text-white flex-col lg:flex-row flex justify-between">
           <div className="my-5">
-            <h1 className="font-extrabold text-2xl">INventrory</h1>
+            <InventoryLogo />
             <p className="text-sm">
               The smartest way to manage your inventory and grow your business.
             </p>

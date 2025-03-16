@@ -1,7 +1,7 @@
 "use client";
-import { AddCategory } from "@/features/categories/components/add-category";
 import { CategoryColumns } from "@/features/categories/components/category-columns";
 import { CategoryDataTable } from "@/features/categories/components/category-data-table";
+import { CategoryHeader } from "@/features/categories/components/category-header";
 import { CreateCategoryModal } from "@/features/categories/components/create-category-modal";
 import { useState } from "react";
 
@@ -28,16 +28,12 @@ export const categories = [
   { id: "20", name: "Industrial & Scientific", items: 155 },
 ];
 
-
 const CategoryPage = () => {
   const [open, setOpen] = useState(false);
   return (
     <section className="">
       <CreateCategoryModal open={open} setOPen={setOpen} />
-      <div className="flex justify-between items-center p-3.5 border-b">
-        <h1 className="text-2xl font-semibold">Categories</h1>
-        <AddCategory onClick={setOpen} />
-      </div>
+      <CategoryHeader setOpen={setOpen} />
       <div className="">
         <CategoryDataTable columns={CategoryColumns} data={categories} />
       </div>

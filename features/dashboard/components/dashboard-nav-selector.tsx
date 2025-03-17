@@ -26,12 +26,12 @@ const selector: Selector[] = [
       {
         icon: Group,
         label: "All Items",
-        href: "/items",
+        href: "/dashboard/items",
       },
       {
         icon: Package,
         label: "Categories",
-        href: "/category",
+        href: "/dashboard/category",
       },
     ],
   },
@@ -41,17 +41,17 @@ const selector: Selector[] = [
       {
         icon: Paperclip,
         label: "Stock History",
-        href: "/history",
+        href: "/dashboard/history",
       },
       {
         icon: TrendingUp,
         label: "Stock Adjustment",
-        href: "/stock-adjustment",
+        href: "/dashboard/stock-adjustment",
       },
       {
         icon: RulerIcon,
         label: "Suppliers",
-        href: "/supplies",
+        href: "/dashboard/supplies",
       },
     ],
   },
@@ -61,17 +61,17 @@ const selector: Selector[] = [
       {
         icon: Paperclip,
         label: "Staff & Roles",
-        href: "/staff",
+        href: "/dashboard/staff",
       },
       {
         icon: TrendingUp,
         label: "Branches",
-        href: "/branches",
+        href: "/dashboard/branches",
       },
       {
         icon: RulerIcon,
         label: "Registers",
-        href: "/registers",
+        href: "/dashboard/registers",
       },
     ],
   },

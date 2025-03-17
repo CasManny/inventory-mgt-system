@@ -12,12 +12,12 @@ const DashboardLinks = [
   {
     label: "Sales",
     icon: BaggageClaim,
-    href: "/sales",
+    href: "/dashboard/sales",
   },
   {
     label: "Reports",
     icon: Focus,
-    href: "/reports",
+    href: "/dashboard/reports",
   },
 ];
 

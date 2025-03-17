@@ -1,8 +1,8 @@
 "use client";
-import { CategoryColumns } from "@/features/categories/components/category-columns";
-import { CategoryDataTable } from "@/features/categories/components/category-data-table";
-import { CategoryHeader } from "@/features/categories/components/category-header";
-import { CreateCategoryModal } from "@/features/categories/components/create-category-modal";
+import { CategoryColumns } from "@/features/all-items/categories/components/category-columns";
+import { CategoryDataTable } from "@/features/all-items/categories/components/category-data-table";
+import { CategoryHeader } from "@/features/all-items/categories/components/category-header";
+import { CreateCategoryModal } from "@/features/all-items/categories/components/create-category-modal";
 import { useState } from "react";
 
 export const categories = [

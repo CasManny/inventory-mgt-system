@@ -1,6 +1,7 @@
-import { ItemsColumns } from "@/features/items/components/items-columns";
-import { ItemsDataTable } from "@/features/items/components/items-data-table";
-import { ItemsHeader } from "@/features/items/components/items-header";
+import { ItemsColumns } from "@/features/all-items/items/components/items-columns";
+import { ItemsDataTable } from "@/features/all-items/items/components/items-data-table";
+import { ItemsHeader } from "@/features/all-items/items/components/items-header";
+
 export const itemsData = [
   {
     id: "1",

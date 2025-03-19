@@ -51,7 +51,7 @@ const selector: Selector[] = [
       {
         icon: RulerIcon,
         label: "Suppliers",
-        href: "/dashboard/supplies",
+        href: "/dashboard/suppliers",
       },
     ],
   },

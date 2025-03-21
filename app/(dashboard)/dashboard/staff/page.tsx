@@ -1,8 +1,6 @@
-import { AddStaffModal } from "@/features/administration/staff/components/add-staff-modal";
 import { Staffcolumns } from "@/features/administration/staff/components/staff-columns";
 import { StaffDataTable } from "@/features/administration/staff/components/staff-data-table";
 import { StaffRoleHeader } from "@/features/administration/staff/components/staff-roles-header";
-import React from "react";
 
 const staffData = [
   {

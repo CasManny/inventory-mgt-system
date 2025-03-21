@@ -8,14 +8,12 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { X } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -23,6 +21,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAddStaffModalStore } from "@/store/add-staff-store-modal";
+import { X } from "lucide-react";
 
 const formSchema = z.object({
   role: z.string(),
@@ -33,6 +33,7 @@ const formSchema = z.object({
 });
 
 export const AddStaffForm = () => {
+  const { setOpenAddStaffModal } = useAddStaffModalStore();
   const branches = [
     {
       value: "877",
@@ -78,7 +79,10 @@ export const AddStaffForm = () => {
           className="space-y-8 p-5 flex-1 overflow-auto"
         >
           <div className="flex justify-between items-center">
-            <X />
+            <X
+              onClick={() => setOpenAddStaffModal(false)}
+              className="cursor-pointer"
+            />
             <h3 className="font-bold text-lg">Invite new member</h3>
             <Button type="submit" variant={"brandButton"}>
               Send invite
@@ -98,13 +102,16 @@ export const AddStaffForm = () => {
                     >
                       <FormControl className="py-0">
                         <SelectTrigger className="w-full">
-                          <SelectValue className="font-semibold text-base" placeholder="Select role" />
+                          <SelectValue
+                            className="font-semibold text-base"
+                            placeholder="Select role"
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         {staffRoles.map((role) => (
                           <SelectItem
-                            className="font-semibold text-base"
+                            className="font-semibold text-base capitalize"
                             value={role.value}
                             key={role.value}
                           >
@@ -189,6 +196,7 @@ export const AddStaffForm = () => {
                           <SelectContent>
                             {branches.map((branch) => (
                               <SelectItem
+                                className="capitalize"
                                 value={branch.value}
                                 key={branch.value}
                               >

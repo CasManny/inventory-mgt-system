@@ -1,16 +1,13 @@
-import { Button, buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { useAddStaffModalStore } from "@/store/add-staff-store-modal";
 import { Plus } from "lucide-react";
-import Link from "next/link";
 
-interface AddStaffProps {
-  setOpenModal: (value: boolean) => void;
-}
 
-export const AddStaff = ({ setOpenModal }: AddStaffProps) => {
+export const AddStaff = () => {
+  const { setOpenAddStaffModal } = useAddStaffModalStore()
   return (
     <Button
-      onClick={() => setOpenModal(true)}
+      onClick={() => setOpenAddStaffModal(true)}
       className={
         "flex items-center text-white rounded-md bg-brand-primary hover:bg-brand-primary cursor-pointer"
       }

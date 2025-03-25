@@ -1,7 +1,6 @@
 import { BaggageClaim, Focus, Home } from "lucide-react";
-import { DashboardNavSelector } from "./dashboard-nav-selector";
 import Link from "next/link";
-import { DashboardSelectBranch } from "./dasboard-select-branch";
+import { DashboardNavSelector } from "./dashboard-nav-selector";
 
 const DashboardLinks = [
   {

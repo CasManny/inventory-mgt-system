@@ -11,7 +11,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import { useAddStaffModalStore } from "@/store/add-staff-store-modal";
 import { X } from "lucide-react";
+import Link from "next/link";
 
 const formSchema = z.object({
   role: z.string(),
@@ -33,7 +34,6 @@ const formSchema = z.object({
 });
 
 export const AddStaffForm = () => {
-  const { setOpenAddStaffModal } = useAddStaffModalStore();
   const branches = [
     {
       value: "877",
@@ -76,13 +76,15 @@ export const AddStaffForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 p-5 flex-1 overflow-auto"
+          className="space-y-8 flex-1 overflow-auto"
         >
-          <div className="flex justify-between items-center">
-            <X
-              onClick={() => setOpenAddStaffModal(false)}
-              className="cursor-pointer"
-            />
+          <div className="flex justify-between items-center border-b px-3 py-2">
+            <Link
+              href={"/dashboard/staff"}
+              className="size-10 rounded-full flex-center bg-gray-200"
+            >
+              <X className="size-5" />
+            </Link>
             <h3 className="font-bold text-lg">Invite new member</h3>
             <Button type="submit" variant={"brandButton"}>
               Send invite

@@ -28,7 +28,7 @@ export const DashboardInventoryChart = () => {
     <Card className="p-4">
       <CardContent>
         <div className="">
-          <h2>Inventory by category</h2>
+          <h2 className="text-xl font-bold mb-4">Inventory by category</h2>
           <ChartContainer config={chartConfig}>
             <BarChart accessibilityLayer data={data}>
               <XAxis

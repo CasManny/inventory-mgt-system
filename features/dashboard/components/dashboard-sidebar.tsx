@@ -24,7 +24,7 @@ const DashboardLinks = [
 export const DashboardSidebar = () => {
   return (
     <div className="w-60 fixed top-0 bottom-0 border-r overflow-scroll no-scrollbar">
-      <DashboardSelectBranch />
+      {/* <DashboardSelectBranch /> */}
       <div className="space-y-2">
         <div className="space-y-1 border-b p-5">
           {DashboardLinks.map(({ label, icon: Icon, href }, index) => (

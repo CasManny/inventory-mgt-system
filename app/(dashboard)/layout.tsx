@@ -6,7 +6,7 @@ const DashboardLayout = ({ children }: PropsWithChildren) => {
     <section className="min-h-screen">
       <div className="w-full h-full">
         <DashboardSidebar />
-        <div className="pl-60">{children}</div>
+        <div className="pl-60 max-w-7xl mx-auto">{children}</div>
       </div>
     </section>
   );

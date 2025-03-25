@@ -82,7 +82,7 @@ export const DashboardRecentActivity = () => {
     }
 
     return () => currentRef?.removeEventListener("scroll", handleScroll);
-  }, [scrollRef]);
+  }, []);
 
   return (
     <Card className="p-4 relative">

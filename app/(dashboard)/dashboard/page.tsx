@@ -14,7 +14,7 @@ const DashboardHomepage = () => {
           <DashboardQuickActions />
           <DashboardAlerts />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-h-64">
           <DashboardInventoryChart />
           <DashboardRecentActivity />
         </div>

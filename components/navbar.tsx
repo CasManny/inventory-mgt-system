@@ -4,8 +4,10 @@ import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import { MobileNavigation } from "./mobile-navigation";
 import { InventoryLogo } from "./logo";
+import { auth } from "@clerk/nextjs/server";
 
-export const Navbar = () => {
+export const Navbar = async () => {
+  const { userId } = await auth();
   return (
     <nav className="max-w-7xl mx-auto px-10 md:px-20 py-5">
       <div className="flex justify-between items-center">
@@ -23,26 +25,39 @@ export const Navbar = () => {
             ))}
           </div>
         </div>
-        <div className="space-x-2 hidden lg:flex">
+        {userId ? (
           <Link
-            href={"/sign-in"}
+            href={"/dashboard"}
             className={cn(
               buttonVariants({ variant: "ghost" }),
               "border px-5 h-10"
             )}
           >
-            Login
+            Dashboard
           </Link>
-          <Link
-            href={"/sign-in"}
-            className={cn(
-              buttonVariants({ variant: "secondary", size: "lg" }),
-              "bg-blue-500 text-white transition-colors duration-300 text-lg hover:bg-blue-500/90 font-extrabold px-8 h-10"
-            )}
-          >
-            Sign up
-          </Link>
-        </div>
+        ) : (
+          <div className="space-x-2 hidden lg:flex">
+            <Link
+              href={"/sign-in"}
+              className={cn(
+                buttonVariants({ variant: "ghost" }),
+                "border px-5 h-10"
+              )}
+            >
+              Login
+            </Link>
+            <Link
+              href={"/sign-in"}
+              className={cn(
+                buttonVariants({ variant: "secondary", size: "lg" }),
+                "bg-blue-500 text-white transition-colors duration-300 text-lg hover:bg-blue-500/90 font-extrabold px-8 h-10"
+              )}
+            >
+              Sign up
+            </Link>
+          </div>
+        )}
+
         <MobileNavigation />
       </div>
     </nav>

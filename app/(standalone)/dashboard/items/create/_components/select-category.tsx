@@ -1,10 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import {
   FormControl,
-  FormDescription,
   FormItem,
   FormLabel,
   FormMessage,
@@ -24,17 +24,25 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
-
-const categories = [
-  { label: "Food", value: "food" },
-  { label: "Drinks", value: "drinks" },
-  { label: "Desserts", value: "desserts" },
-  { label: "Appetizers", value: "appetizers" },
-] as const;
+import { trpc } from "@/trpc/client";
 
 export const SelectCategory = () => {
-  const { control, setValue, watch } = useFormContext();
+  const { setValue, watch } = useFormContext();
   const selectedCategory = watch("category");
+  const [inputValue, setInputValue] = useState(""); // Track user input
+  const utils = trpc.useUtils();
+
+  // Fetch categories
+  const { data: categories, isLoading } =
+    trpc.categories.getAllCategories.useQuery();
+
+  // Mutation to create a new category
+  const createCategory = trpc.categories.createCategory.useMutation({
+    onSuccess: ({ categoryName: label, id: value }) => {
+      utils.categories.getAllCategories.invalidate(); // Refresh categories
+      setInputValue("")
+    },
+  });
 
   return (
     <FormItem>
@@ -54,35 +62,47 @@ export const SelectCategory = () => {
               )}
             >
               {selectedCategory
-                ? categories.find(
+                ? categories?.find(
                     (category) => category.value === selectedCategory
                   )?.label
-                : "click to select"}
+                : isLoading
+                ? "Loading..."
+                : "Click to select"}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </FormControl>
         </PopoverTrigger>
         <PopoverContent className="w-full p-0">
           <Command className="w-full">
-            <CommandInput placeholder="Search category..." />
+            <CommandInput
+              placeholder="Search category..."
+              value={inputValue}
+              onValueChange={setInputValue} // Update state when user types
+            />
             <CommandList className="sm:w-[500px]">
               <CommandEmpty>
-                <div className="">
+                <div className="text-center">
                   <p>No category found.</p>
-                  <Button className="bg-brand-primary/90 hover:bg-brand-primary cursor-pointer">
-                    Create category
+                  <Button
+                    onClick={() => createCategory.mutate({ name: inputValue })}
+                    disabled={!inputValue.trim()} // Prevent empty submissions
+                    className="bg-brand-primary/90 mt-2 hover:bg-brand-primary cursor-pointer"
+                  >
+                    {createCategory.isPending
+                      ? "Creating..."
+                      : `create category`}
                   </Button>
                 </div>
               </CommandEmpty>
               <CommandGroup className="w-full">
-                {categories.map((category) => (
+                {categories?.map((category) => (
                   <CommandItem
-                    value={category.label}
+                    value={category.value} // Backend returns value = id
                     key={category.value}
                     onSelect={() => setValue("category", category.value)}
                     className="w-full"
                   >
-                    {category.label}
+                    {category.label} {/* Display label */}
                     <Check
                       className={cn(
                         "ml-auto",

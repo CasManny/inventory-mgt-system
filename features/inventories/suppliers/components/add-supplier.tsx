@@ -1,12 +1,19 @@
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Plus } from "lucide-react";
-import React from "react";
+import Link from "next/link";
 
 export const AddSupplier = () => {
   return (
-    <Button className="flex items-center rounded font-semibold bg-brand-primary hover:bg-brand-primary cursor-pointer">
+    <Link
+      href={"/dashboard/suppliers/add-supplier"}
+      className={cn(
+        buttonVariants({}),
+        "flex items-center rounded font-semibold bg-brand-primary hover:bg-brand-primary cursor-pointer"
+      )}
+    >
       <Plus />
       <span>Add supplier</span>
-    </Button>
+    </Link>
   );
 };

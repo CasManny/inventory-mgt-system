@@ -8,6 +8,11 @@ import {
   uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
+import {
+  createInsertSchema,
+  createSelectSchema,
+  createUpdateSchema,
+} from "drizzle-zod";
 
 const createdAt = timestamp("created_at").defaultNow().notNull();
 const updatedAt = timestamp("updated_at").defaultNow().notNull();
@@ -29,6 +34,7 @@ export const users = pgTable(
 
 export const usersRelations = relations(users, ({ many }) => ({
   categories: many(categories),
+  suppliers: many(suppliers),
 }));
 
 export const categories = pgTable("categories", {
@@ -51,9 +57,15 @@ export const branches = pgTable("branches", {
   id,
   name: text("branch_name").notNull(),
   location: text("location"),
+  numberOfStaff: integer("number_of_staff"),
+  numberOfRegister: integer("number_of_register"),
   createdAt,
   updatedAt,
 });
+
+export const branchesRelations = relations(branches, ({ many }) => ({
+  items: many(categoryItems),
+}));
 
 export const categoryItems = pgTable("category_items", {
   id,
@@ -61,9 +73,12 @@ export const categoryItems = pgTable("category_items", {
   categoryId: uuid("category_id").references(() => categories.id, {
     onDelete: "cascade",
   }),
+  supplierId: uuid("supplier_id").references(() => suppliers.id, {
+    onDelete: "set null",
+  }),
   stockQuantity: integer("stock_quantity"),
-  trackAlert: boolean("track_alert").default(false),
-  lowStockAlert: integer("low_stock_alert").default(0),
+  trackAlert: boolean("track_alert"),
+  lowStockAlert: integer("low_stock_alert"),
   branchId: uuid("branch_id").references(() => branches.id, {
     onDelete: "set null",
   }),
@@ -83,6 +98,10 @@ export const categoryItemsRelations = relations(categoryItems, ({ one }) => ({
     fields: [categoryItems.branchId],
     references: [branches.id],
   }),
+  supplier: one(suppliers, {
+    fields: [categoryItems.supplierId],
+    references: [suppliers.id],
+  }),
 }));
 
 export const suppliers = pgTable("suppliers", {
@@ -90,4 +109,17 @@ export const suppliers = pgTable("suppliers", {
   supplierName: text("supplier_name").unique().notNull(),
   email: text("email").notNull().unique(),
   phone: text("phone").notNull().unique(),
+  userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
 });
+
+export const suppliersRelations = relations(suppliers, ({ many, one }) => ({
+  items: many(categoryItems),
+  user: one(users, {
+    fields: [suppliers.userId],
+    references: [users.id],
+  }),
+}));
+
+export const supplierCreateSchema = createInsertSchema(suppliers);
+export const supplierUpdateSchema = createUpdateSchema(suppliers);
+export const supplierSelectSchema = createSelectSchema(suppliers);

@@ -1,14 +1,14 @@
-import { supplierColumns } from "@/features/inventories/suppliers/components/supplier-columns";
-import { SuppliersDataTable } from "@/features/inventories/suppliers/components/suppliers-data-table";
+import { SupplierSection } from "@/features/inventories/suppliers/components/supplier-section";
 import { SuppliersHeader } from "@/features/inventories/suppliers/components/suppliers-header";
-import React from "react";
+import { HydrateClient, trpc } from "@/trpc/server";
 
 const SuppliersHomepage = () => {
+  void trpc.suppliers.getAllSuppliers.prefetch();
   return (
-    <section className="">
+    <HydrateClient>
       <SuppliersHeader />
-      <SuppliersDataTable columns={supplierColumns} data={[]} />
-    </section>
+      <SupplierSection />
+    </HydrateClient>
   );
 };
 

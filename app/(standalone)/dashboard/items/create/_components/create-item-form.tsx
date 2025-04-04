@@ -21,6 +21,8 @@ import { useState } from "react";
 import { ItemType } from "./item-type";
 import { Separator } from "@/components/ui/separator";
 import { SelectCategory } from "./select-category";
+import { SelectSupplier } from "./select-supplier";
+import { ProfitLossIndicator } from "./profit-loss-indicator";
 
 const itemVariable: {
   label: string;
@@ -44,6 +46,9 @@ const formSchema = z.object({
     message: "Item name must be at least 2 characters.",
   }),
   category: z.string().optional(),
+  supplier: z.string().optional(),
+  sellingPrice: z.coerce.number().optional(),
+  costPrice: z.coerce.number().optional(),
   stockQuantity: z.number().optional(),
   lowStockAlert: z.number().optional(),
   monitorStock: z.boolean(),
@@ -61,7 +66,10 @@ export const CreateItemForm = () => {
       category: "",
       stockQuantity: undefined,
       lowStockAlert: undefined,
+      sellingPrice: undefined,
+      costPrice: undefined,
       monitorStock: trackInventory,
+      supplier: "",
     },
   });
 
@@ -130,10 +138,47 @@ export const CreateItemForm = () => {
                   </FormItem>
                 )}
               />
+              <div className="space-y-3">
+                <FormField
+                  control={form.control}
+                  name="sellingPrice"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Selling Price</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="costPrice"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Cost Price</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <ProfitLossIndicator
+                  costPrice={form.watch("costPrice")}
+                  sellingPrice={form.watch("sellingPrice")}
+                />
+              </div>
               <FormField
                 control={form.control}
                 name="category"
                 render={() => <SelectCategory />}
+              />
+              <FormField
+                control={form.control}
+                name="supplier"
+                render={() => <SelectSupplier />}
               />
               <div className="space-y-4">
                 <h1 className="text-xl font-bold">Track Inventory</h1>

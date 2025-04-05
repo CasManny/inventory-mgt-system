@@ -23,31 +23,28 @@ import { Button } from "@/components/ui/button";
 // You can use a Zod schema here if you want.
 export type Item = {
   id: string;
-  item: {
-    imageUrl?: string;
-    name: string;
-  };
-  category: string;
-  unit: string;
-  branch: string;
-  isLow: boolean;
-  stock: number;
-  sellingPrice: number;
-  costPrice: number;
-  supplier: string;
+  imageUrl: string | null;
+  name: string;
+  category: string | null;
+  branch: string | null;
+  isLow: boolean | null;
+  stock: number | null;
+  sellingPrice: number | null;
+  costPrice: number | null;
+  supplier: string | null;
 };
 
 export const ItemsColumns: ColumnDef<Item>[] = [
   {
-    accessorKey: "item",
+    accessorKey: "imageUrl",
     header: "Items",
     cell: ({ row }) => (
       <div className="flex items-center space-x-2">
-        {row.original.item.imageUrl ? (
+        {row.original.imageUrl ? (
           <div className="relative size-8">
             <Image
-              src={row.original.item.imageUrl}
-              alt={row.original.item.name}
+              src={row.original.imageUrl}
+              alt={row.original.name}
               fill
               className="w-10 h-10 rounded"
             />
@@ -57,11 +54,11 @@ export const ItemsColumns: ColumnDef<Item>[] = [
             <ImageIcon className="size-5 rounded-full" />
           </Button>
         )}
-        <span>{row.original.item.name || "No Name"}</span>
+        <span>{row.original.name || "No Name"}</span>
       </div>
     ),
     filterFn: (row, columnId, filterValue) => {
-      return row.original.item.name
+      return row.original.name
         .toLowerCase()
         .includes(filterValue.toLowerCase());
     },
@@ -69,10 +66,6 @@ export const ItemsColumns: ColumnDef<Item>[] = [
   {
     accessorKey: "category",
     header: "Category",
-  },
-  {
-    accessorKey: "unit",
-    header: "Unit",
   },
   {
     accessorKey: "branch",

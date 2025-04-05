@@ -1,12 +1,12 @@
 import { db } from "@/db";
-import { supplierCreateSchema, suppliers } from "@/db/schema";
+import {  supplierInsertSchema, suppliers } from "@/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 import { TRPCError } from "@trpc/server";
 import { and, eq } from "drizzle-orm";
 
 export const suppliersRouter = createTRPCRouter({
   createSupplier: protectedProcedure
-    .input(supplierCreateSchema)
+    .input(supplierInsertSchema)
     .mutation(async ({ input, ctx }) => {
       const { user } = ctx;
       const { email, phone, supplierName } = input;

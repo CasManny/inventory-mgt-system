@@ -35,6 +35,8 @@ export const users = pgTable(
 export const usersRelations = relations(users, ({ many }) => ({
   categories: many(categories),
   suppliers: many(suppliers),
+  branches: many(branches),
+  categoryItems: many(categoryItems),
 }));
 
 export const categories = pgTable("categories", {
@@ -58,14 +60,23 @@ export const branches = pgTable("branches", {
   name: text("branch_name").notNull(),
   location: text("location"),
   numberOfStaff: integer("number_of_staff"),
+  userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
   numberOfRegister: integer("number_of_register"),
   createdAt,
   updatedAt,
 });
 
-export const branchesRelations = relations(branches, ({ many }) => ({
+export const branchesRelations = relations(branches, ({ many, one }) => ({
   items: many(categoryItems),
+  user: one(users, {
+    fields: [branches.userId],
+    references: [users.id],
+  }),
 }));
+
+export const branchInsertSchema = createInsertSchema(branches);
+export const branchUpdateSchema = createUpdateSchema(branches);
+export const brancheSelectSchema = createSelectSchema(branches);
 
 export const categoryItems = pgTable("category_items", {
   id,
@@ -73,6 +84,7 @@ export const categoryItems = pgTable("category_items", {
   categoryId: uuid("category_id").references(() => categories.id, {
     onDelete: "cascade",
   }),
+  userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
   supplierId: uuid("supplier_id").references(() => suppliers.id, {
     onDelete: "set null",
   }),
@@ -102,7 +114,15 @@ export const categoryItemsRelations = relations(categoryItems, ({ one }) => ({
     fields: [categoryItems.supplierId],
     references: [suppliers.id],
   }),
+  user: one(users, {
+    fields: [categoryItems.userId],
+    references: [users.id],
+  }),
 }));
+
+export const categoryItemInsertSchema = createInsertSchema(categoryItems);
+export const categoryItemSelectSchema = createSelectSchema(categoryItems);
+export const cateogoryItemUpdateSchema = createUpdateSchema(categoryItems);
 
 export const suppliers = pgTable("suppliers", {
   id,
@@ -120,6 +140,6 @@ export const suppliersRelations = relations(suppliers, ({ many, one }) => ({
   }),
 }));
 
-export const supplierCreateSchema = createInsertSchema(suppliers);
+export const supplierInsertSchema = createInsertSchema(suppliers);
 export const supplierUpdateSchema = createUpdateSchema(suppliers);
 export const supplierSelectSchema = createSelectSchema(suppliers);

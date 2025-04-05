@@ -15,14 +15,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ItemType } from "./item-type";
 import { Separator } from "@/components/ui/separator";
 import { SelectCategory } from "./select-category";
 import { SelectSupplier } from "./select-supplier";
 import { ProfitLossIndicator } from "./profit-loss-indicator";
+import { SelectBranch } from "./select-branch";
+import { trpc } from "@/trpc/client";
+import { toast } from "sonner";
 
 const itemVariable: {
   label: string;
@@ -46,11 +49,13 @@ const formSchema = z.object({
     message: "Item name must be at least 2 characters.",
   }),
   category: z.string().optional(),
+  imageUrl: z.string().optional(),
+  branchId: z.string().optional(),
   supplier: z.string().optional(),
   sellingPrice: z.coerce.number().optional(),
   costPrice: z.coerce.number().optional(),
-  stockQuantity: z.number().optional(),
-  lowStockAlert: z.number().optional(),
+  stockQuantity: z.coerce.number().optional(),
+  lowStockAlert: z.coerce.number().optional(),
   monitorStock: z.boolean(),
 });
 
@@ -58,7 +63,19 @@ export const CreateItemForm = () => {
   const [itemState, setItemState] = useState<"standard" | "variable">(
     "standard"
   );
+  const utils = trpc.useUtils();
   const [trackInventory, setTrackInventory] = useState(false);
+  const addItem = trpc.items.createItem.useMutation({
+    onSuccess: () => {
+      utils.items.getAllItems.invalidate();
+      toast.success("item added");
+      form.reset();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+  const isPending = addItem.isPending;
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -68,13 +85,25 @@ export const CreateItemForm = () => {
       lowStockAlert: undefined,
       sellingPrice: undefined,
       costPrice: undefined,
+      imageUrl: undefined,
+      branchId: undefined,
       monitorStock: trackInventory,
       supplier: "",
     },
   });
+  const { setValue } = form;
+
+  useEffect(() => {
+    setValue("monitorStock", trackInventory);
+  }, [trackInventory, setValue]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    addItem.mutate({
+      ...values,
+      trackAlert: values.monitorStock,
+      supplierId: values.supplier,
+      categoryId: values.category,
+    });
   }
   return (
     <Form {...form}>
@@ -88,10 +117,11 @@ export const CreateItemForm = () => {
           </Link>
           <h3 className="text-xl font-semibold">Add an Item</h3>
           <Button
+            disabled={isPending}
             type="submit"
             className="bg-brand-primary hover:bg-brand-primary/90"
           >
-            Create item
+            {isPending ? <Loader2 className="animate-spin" /> : "create item"}
           </Button>
         </div>
 
@@ -179,6 +209,11 @@ export const CreateItemForm = () => {
                 control={form.control}
                 name="supplier"
                 render={() => <SelectSupplier />}
+              />
+              <FormField
+                control={form.control}
+                name="branchId"
+                render={() => <SelectBranch />}
               />
               <div className="space-y-4">
                 <h1 className="text-xl font-bold">Track Inventory</h1>

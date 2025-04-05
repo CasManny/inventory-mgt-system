@@ -24,9 +24,9 @@ import { Button } from "@/components/ui/button";
 export type Branch = {
   id: string;
   name: string;
-  address: string;
-  numberOfStaff: number;
-  numberOfRegisters: number;
+  address: string | null;
+  numberOfStaff: number | null;
+  numberOfRegisters: number | null;
 };
 
 export const branchColumns: ColumnDef<Branch>[] = [

@@ -2,23 +2,23 @@
 
 import { Button } from "@/components/ui/button";
 import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
 } from "@/components/ui/command";
 import {
-    FormControl,
-    FormItem,
-    FormLabel,
-    FormMessage,
+  FormControl,
+  FormItem,
+  FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { trpc } from "@/trpc/client";
@@ -26,22 +26,22 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
-export const SelectSupplier = () => {
+export const SelectBranch = () => {
   const { setValue, watch } = useFormContext();
-  const selectedSupplier = watch("supplier");
+  const selectedBranch = watch("branchId");
   const [inputValue, setInputValue] = useState(""); // Track user input
   // Fetch categories
-  const { data, isLoading } = trpc.suppliers.getAllSuppliers.useQuery();
+  const { data, isLoading } = trpc.branches.getAllBranches.useQuery();
 
-  const suppliers = data?.map((item) => ({
+  const branches = data?.map((item) => ({
     value: item.id,
-    label: item.supplierName,
+    label: item.name,
   }));
 
   return (
     <FormItem>
       <div className="flex justify-between items-center">
-        <FormLabel>Supplier</FormLabel>
+        <FormLabel>Branch</FormLabel>
         <span className="text-sm text-muted-foreground">Optional</span>
       </div>
       <Popover>
@@ -52,16 +52,16 @@ export const SelectSupplier = () => {
               role="combobox"
               className={cn(
                 "w-full justify-between",
-                !selectedSupplier && "text-muted-foreground"
+                !selectedBranch && "text-muted-foreground"
               )}
             >
-              {selectedSupplier
-                ? suppliers?.find(
-                    (supplier) => supplier.value === selectedSupplier
+              {selectedBranch
+                ? branches?.find(
+                    (branch) => branch.value === selectedBranch
                   )?.label
                 : isLoading
                 ? "Loading..."
-                : "select item supplier"}
+                : "select item branch"}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
           </FormControl>
@@ -69,7 +69,7 @@ export const SelectSupplier = () => {
         <PopoverContent className="w-full p-0">
           <Command className="w-full">
             <CommandInput
-              placeholder="Search suppliers..."
+              placeholder="Search branch..."
               value={inputValue}
               onValueChange={setInputValue} // Update state when user types
             />
@@ -78,18 +78,18 @@ export const SelectSupplier = () => {
                 <p className="text-muted-foreground">No supplier found.</p>
               </CommandEmpty>
               <CommandGroup className="w-full">
-                {suppliers?.map((supplier) => (
+                {branches?.map((branch) => (
                   <CommandItem
-                    value={supplier.value} // Backend returns value = id
-                    key={supplier.value}
-                    onSelect={() => setValue("supplier", supplier.value)}
+                    value={branch.value} // Backend returns value = id
+                    key={branch.value}
+                    onSelect={() => setValue("branchId", branch.value)}
                     className="w-full"
                   >
-                    {supplier.label} {/* Display label */}
+                    {branch.label} {/* Display label */}
                     <Check
                       className={cn(
                         "ml-auto",
-                        supplier.value === selectedSupplier
+                        branch.value === selectedBranch
                           ? "opacity-100"
                           : "opacity-0"
                       )}

@@ -34,9 +34,5 @@ export const ProfitLossIndicator = ({ sellingPrice, costPrice }: Props) => {
     );
   }
 
-  return (
-    <p className="text-gray-600 font-medium">
-      You will break even — no profit or loss.
-    </p>
-  );
+  return null;
 };
